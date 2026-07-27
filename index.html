@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SkillsCred | Sales Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <!-- =========================
+         TOP NAVBAR
+    ========================== -->
+
+    <nav class="navbar">
+
+        <div class="brand">
+            <div class="brand-logo">SC</div>
+
+            <div>
+                <h2>SkillsCred</h2>
+                <span>Sales Analytics</span>
+            </div>
+        </div>
+
+        <div class="nav-status">
+            <span class="status-dot"></span>
+            Live Dashboard
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         MAIN DASHBOARD
+    ========================== -->
+
+    <main class="dashboard">
+
+        <!-- HEADER -->
+
+        <header class="dashboard-header">
+
+            <div class="header-content">
+                <p class="eyebrow">OVERVIEW</p>
+
+                <h1>Sales Dashboard</h1>
+
+                <p class="header-description">
+                    Track sales performance, revenue and representative activity.
+                </p>
+            </div>
+
+
+            <div class="date-filter">
+
+                <div class="date-input-group">
+                    <label for="reportDate">Report date</label>
+
+                    <input
+                        type="date"
+                        id="reportDate"
+                        value="2026-05-17"
+                    >
+                </div>
+
+                <button id="loadDashboard">
+                    Load Dashboard
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- =========================
+             KPI SECTION
+        ========================== -->
+
+        <section class="kpi-grid">
+
+            <!-- TODAY -->
+
+            <article class="kpi-card">
+
+                <div class="kpi-header">
+                    <span>Today</span>
+                    <span class="kpi-badge">Daily</span>
+                </div>
+
+                <div class="kpi-main">
+                    <span class="kpi-label">Revenue</span>
+                    <strong id="todayRevenue">--</strong>
+                </div>
+
+                <div class="kpi-footer">
+                    <span>Sales</span>
+                    <strong id="todaySales">--</strong>
+                </div>
+
+            </article>
+
+
+            <!-- MTD -->
+
+            <article class="kpi-card">
+
+                <div class="kpi-header">
+                    <span>Month to Date</span>
+                    <span class="kpi-badge">MTD</span>
+                </div>
+
+                <div class="kpi-main">
+                    <span class="kpi-label">Revenue</span>
+                    <strong id="mtdRevenue">--</strong>
+                </div>
+
+                <div class="kpi-footer">
+                    <span>Sales</span>
+                    <strong id="mtdSales">--</strong>
+                </div>
+
+            </article>
+
+
+            <!-- PREVIOUS SAME DAY -->
+
+            <article class="kpi-card">
+
+                <div class="kpi-header">
+                    <span>Previous Month</span>
+                    <span class="kpi-badge">Same period</span>
+                </div>
+
+                <div class="kpi-main">
+                    <span class="kpi-label">Revenue</span>
+                    <strong id="previousSameDayRevenue">--</strong>
+                </div>
+
+                <div class="kpi-footer">
+                    <span>Sales</span>
+                    <strong id="previousSameDaySales">--</strong>
+                </div>
+
+            </article>
+
+
+            <!-- PREVIOUS MONTH -->
+
+            <article class="kpi-card">
+
+                <div class="kpi-header">
+                    <span>Previous Month</span>
+                    <span class="kpi-badge">Total</span>
+                </div>
+
+                <div class="kpi-main">
+                    <span class="kpi-label">Revenue</span>
+                    <strong id="previousMonthRevenue">--</strong>
+                </div>
+
+                <div class="kpi-footer">
+                    <span>Sales</span>
+                    <strong id="previousMonthSales">--</strong>
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- =========================
+             CHART SECTION
+        ========================== -->
+
+        <section class="charts-grid">
+
+            <!-- DAILY -->
+
+            <article class="chart-card">
+
+                <div class="card-heading">
+
+                    <div>
+                        <h2>Sales by Representative</h2>
+                        <p>Month-to-date sales performance</p>
+                    </div>
+
+                    <span class="chart-tag">Sales</span>
+
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="dailyChart"></canvas>
+                </div>
+
+            </article>
+
+
+            <!-- MONTHLY -->
+
+            <article class="chart-card">
+
+                <div class="card-heading">
+
+                    <div>
+                        <h2>Monthly Sales</h2>
+                        <p>Sales volume trend throughout 2026</p>
+                    </div>
+
+                    <span class="chart-tag">Trend</span>
+
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="monthlyChart"></canvas>
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- =========================
+             LEADERBOARD
+        ========================== -->
+
+        <section class="leaderboard-card">
+
+            <div class="card-heading leaderboard-heading">
+
+                <div>
+                    <h2>Sales Representative Leaderboard</h2>
+                    <p>
+                        Month-to-date and today's individual performance
+                    </p>
+                </div>
+
+                <span class="leaderboard-label">
+                    Ranked by MTD sales
+                </span>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Representative</th>
+                            <th>MTD Sales</th>
+                            <th>MTD Revenue</th>
+                            <th>Today Sales</th>
+                            <th>Today Revenue</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="leaderboardBody">
+
+                        <!-- Generated by script.js -->
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             FOOTER
+        ========================== -->
+
+        <footer class="dashboard-footer">
+
+            <p>
+                SkillsCred Sales Dashboard
+            </p>
+
+            <p>
+                Data powered by Supabase
+            </p>
+
+        </footer>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
